@@ -18,5 +18,17 @@ with open('input.csv', 'r', newline='') as csvfile:
         inpu.append(int(row[0]))
 csvfile.close()
 
-for val in inpu:
-    func(val)
+start = time.perf_counter()
+
+Threads = []
+for i in range(len(inpu)):
+    t = threading.Thread(target=func, args=[inpu[i]])
+    t.start()
+    Threads.append(t)
+
+for i in range(len(inpu)):
+    Threads[i].join()
+
+end = time.perf_counter()
+print(f'{end - start} seconds')
+
